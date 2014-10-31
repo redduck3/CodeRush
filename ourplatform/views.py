@@ -62,18 +62,24 @@ def login(request):
         '''ÐÞ¸Ä×´Ì¬Âë'''
         return response
     user = result[0]
+    '''
     request.session["uid"] = user.id
     request.session["username"] = user.username
     request.session["password"] = user.password
     request.session["gender"] = user.gender
+    '''
+    request.session['user'] = user
     return HttpResponse("OK")
 
 def logout(request):
     try:
+        '''
         del request.session['uid']
         del request.session['username']
         del request.session['password']
         del request.session['gender']
+        '''
+        del request.session['user']
     except KeyError:
         pass
     return HttpResponse("OK")
@@ -97,11 +103,13 @@ def createUser(request):
     response['uid'] = user.id
     response['username'] = user.username
     response_json = json.dumps(response)
-    
+    '''
     request.session["uid"] = user.id
     request.session["username"] = user.username
     request.session["password"] = user.password
     request.session["gender"] = user.gender
+    '''
+    request.session['user'] = user
     
     return HttpResponse(response_json)
 
@@ -140,11 +148,11 @@ def updateUser(request):
     return HttpResponse('OK')
 
 def deleteUser(request):
-    if 'uid' not in request.session:
+    if 'user' not in request.session:
         response = HttpResponse()
         '''modify status'''
         return response
-    uid = request.session['uid']
+    uid = request.session['user'].id
     getid = request.POST['id']
     if uid !=getid:
         return HttpResponseForbidden()
@@ -154,10 +162,13 @@ def deleteUser(request):
     user = result[0]
     user.delete()
     try:
+        '''
         del request.session['uid']
         del request.session['username']
         del request.session['password']
         del request.session['gender']
+        '''
+        del request.session['user']
     except KeyError:
         pass
     return HttpResponse('OK')
