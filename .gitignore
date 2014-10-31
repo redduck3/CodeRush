@@ -1,1 +1,3 @@
-*.pyc
+hackathon/*.pyc
+ourplatform/*.pyc
+ourplatform/migrations/*.pyc
