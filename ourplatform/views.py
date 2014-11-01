@@ -5,6 +5,8 @@ from django.http import *
 from urllib2 import Request
 import json
 from datetime import datetime
+from ourplatform import CJsonEncoder
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 # def test(request):
@@ -25,7 +27,7 @@ def createActivities(request):
                   'starttime': newActivity.starttime,
                   'endtime': newActivity.endtime,
                   'description': newActivity.description}
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
 
 def getActivities(request):
     listOfActivities = Activity.objects.all()
@@ -38,7 +40,7 @@ def getActivities(request):
                'description': i.description
                }
         returnData.append(buf)
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
 
 def getActivityById(request, id):
     aid = id
@@ -49,7 +51,7 @@ def getActivityById(request, id):
                   'starttime': acbuf.starttime,
                   'endtime': acbuf.endtime,
                   'description': acbuf.description}
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
 
 def getActivitiesUndo(request):
     listOfActivities = Activity.objects.all()
@@ -63,7 +65,7 @@ def getActivitiesUndo(request):
                'description': i.description
                }
             returnData.append(buf)
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
     
 def updateActivity(request, aid):
     userBuf = User.objects.filter(id=request.PUT['uid'])[0]
@@ -73,7 +75,7 @@ def updateActivity(request, aid):
     myactivity.endtime = request.POST['endtime']
     myactivity.description = request.POST['description']
     myactivity.save()
-    return HttpResponse()
+    return HttpResponse('ok')
     
 def login(request):
     payload_json = request.POST['payload']
