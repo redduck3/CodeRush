@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     
     url(r'^post/users/$', views.createUser, name='createUser'),
     url(r'^get/users/(?P<id>\d+)/$', views.getUser, name='getUser'),
-    url(r'^put/users/$', views.updateUser, name='updateUser'),
-    url(r'^delete/users/$', views.deleteUser, name='deleteUser'),
-    url(r'^login/$', views.login, name='login'),
+    url(r'^put/users/(?P<id>\d+)/$', views.updateUser, name='updateUser'),
+    url(r'^delete/users/(?P<id>\d+)/$', views.deleteUser, name='deleteUser'),
+    url(r'login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
 )

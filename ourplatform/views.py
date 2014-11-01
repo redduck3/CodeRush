@@ -96,7 +96,10 @@ def login(request):
     request.session["gender"] = user.gender
     '''
     request.session['user'] = user
-    return HttpResponse("OK")
+    requestContext = {}
+    requestContext['uid'] = user.id
+    requestContext['username'] = user.username
+    return HttpResponse(json.dumps(requestContext),content_type="application/json")
 
 def logout(request):
     try:
@@ -106,7 +109,7 @@ def logout(request):
         del request.session['password']
         del request.session['gender']
         '''
-        del request.session['user']
+        del request.session['user'] 
     except KeyError:
         pass
     return HttpResponse("OK")
@@ -138,10 +141,10 @@ def createUser(request):
     '''
     request.session['user'] = user
     
-    return HttpResponse(response_json)
+    return HttpResponse(response_json,content_type="application/json")
 
-def getUser(request):
-    getid = request.GET['id']
+def getUser(request,id):
+    getid = id
     user = User.objects.get(id = getid)
     if len(user) == 0:
         return HttpResponseBadRequest()
@@ -151,15 +154,15 @@ def getUser(request):
     response['password'] = user.password
     response['gender'] = user.gender
     response_json = json.dumps(response)
-    return HttpResponse(response_json)
+    return HttpResponse(response_json,content_type="application/json")
 
-def updateUser(request):
-    if 'uid' not in request.session:
+def updateUser(request,id):
+    if 'user' not in request.session:
         response = HttpResponse()
         '''modify status'''
         return response
-    uid = request.session['uid']
-    putid = request.POST['id']
+    uid = request.session['user'].id
+    putid = id
     if uid != putid:
         return HttpResponseForbidden()
     result = User.objects.filter(id = putid)
@@ -172,15 +175,18 @@ def updateUser(request):
     user.password = payload['password']
     user.gender = payload['gender']
     user.save()
+    
+    request.session['user'] = user
+    
     return HttpResponse('OK')
 
-def deleteUser(request):
+def deleteUser(request,id):
     if 'user' not in request.session:
         response = HttpResponse()
         '''modify status'''
         return response
     uid = request.session['user'].id
-    getid = request.POST['id']
+    getid = id
     if uid !=getid:
         return HttpResponseForbidden()
     result = User.objects.filter(id = getid)
@@ -199,7 +205,3 @@ def deleteUser(request):
     except KeyError:
         pass
     return HttpResponse('OK')
-
-    
-    
-    
