@@ -260,4 +260,16 @@ def getJoinersByUser(request,uid):
         returnData.append(buf)
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
         
-    
+def getJoinersByAct(request,aid):
+    if 'user' not in request.session:
+        return HttpResponse(status = 401)
+    joiners = Joiner.objects.filter(aid = aid)
+    returnData = []
+    for joiner in joiners:
+        user = joiner.user
+        buf = {'uid': user.id,
+               'username': user.username,
+               'gender': user.gender
+               }
+        returnData.append(buf)
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
