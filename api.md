@@ -69,3 +69,28 @@ input:
 return:
 
 	200OK
+
+## get/joiners/{aid}
+
+method: get
+
+return
+
+	[{uid
+	}]
+
+## get/joiners/{uid}
+
+method: get
+
+return
+
+	[{aid
+	}]
+
+## post/joiners
+
+method: post
+
+input:
+	

@@ -7,6 +7,8 @@ import json
 from datetime import datetime, date
 from ourplatform import CJsonEncoder
 from django.core.serializers.json import DjangoJSONEncoder
+from django.template import RequestContext, loader
+
 
 # Create your views here.
 # def test(request):
@@ -16,6 +18,11 @@ from django.core.serializers.json import DjangoJSONEncoder
 #     Activity(owner=user, starttime="2012-08-27", endtime="2012-08-27").save()
 #     Joiner(activity=Activity.objects.get(id=1), user=User.objects.get(id=2)).save()
 #     return HttpResponse("Hello world")
+
+def index(request):
+    template = loader.get_template('ourplaform/index.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
 
 def createActivities(request):
     userid = request.POST['uid']
