@@ -145,9 +145,10 @@ def createUser(request):
 
 def getUser(request,id):
     getid = id
-    user = User.objects.get(id = getid)
-    if len(user) == 0:
+    users = User.objects.filter(id = getid)
+    if len(users) == 0:
         return HttpResponseBadRequest()
+    user = users[0]
     response = {}
     response['uid'] = user.id
     response['username'] = user.username
