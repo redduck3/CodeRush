@@ -2,15 +2,26 @@
 
 ## post/activities/
 
+method: post
+
+input:
+
+	{'uid',
+     'starttime',
+     'endtime',
+     'description'}
+
 return:
 
-	{'aid': newActivity.id, 
-     'uid': newActivity.owner.id, 
-     'starttime': newActivity.starttime,
-     'endtime': newActivity.endtime,
-     'description': newActivity.description}
+	{'aid',
+     'uid',
+     'starttime',
+     'endtime',
+     'description'}
 
 ## get/activities/
+
+method: get
 
 return:
 
@@ -22,6 +33,8 @@ return:
 
 ## get/activities/{id}
 
+method: get
+
 return:
 
 	{'aid'
@@ -29,4 +42,30 @@ return:
     'starttime'
     'endtime'
 	'description'}
-	
+
+## get/activities/undo
+
+method: get
+
+return:
+
+	[{'aid'
+    'uid'
+    'starttime'
+    'endtime'
+	'description'}]
+
+## put/activities/{aid}
+
+method: post
+
+input:
+
+	{'uid'
+    'starttime'
+    'endtime'
+	'description'}
+
+return:
+
+	200OK

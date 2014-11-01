@@ -4,7 +4,7 @@ from ourplatform.models import *
 from django.http import *
 from urllib2 import Request
 import json
-from datetime import datetime
+from datetime import datetime, date
 from ourplatform import CJsonEncoder
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -57,7 +57,7 @@ def getActivitiesUndo(request):
     listOfActivities = Activity.objects.all()
     returnData = []
     for i in listOfActivities:
-        if (i.endtime <= datetime.now()):
+        if (i.endtime >= date.today()):
             buf = {'aid': i.id,
                'uid': i.owner.id,
                'starttime': i.starttime,
