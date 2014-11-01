@@ -20,7 +20,7 @@ from distutils.tests.test_archive_util import UID_GID_SUPPORT
 #     return HttpResponse("Hello world")
 
 def index(request):
-    template = loader.get_template('ourplatform/index.html')
+    template = loader.get_template('index.html')
     context = RequestContext(request)
     return HttpResponse(template.render(context))
 
