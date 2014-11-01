@@ -8,6 +8,7 @@ from datetime import datetime, date
 from ourplatform import CJsonEncoder
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import RequestContext, loader
+from django.views.decorators.csrf import csrf_exempt
 #from distutils.tests.test_archive_util import UID_GID_SUPPORT
 
 # Create your views here.
@@ -162,10 +163,15 @@ def logout(request):
     return HttpResponse("OK")
     
         
-    
+@csrf_exempt 
 def createUser(request):
-   
+    if request.method == 'GET':
+        print '000000000'
+    if request.method == 'POST': 
+        print "11111111111111"
+    print request
     postname = request.POST['username']
+    print postname
     postpasswd = request.POST['password']
     postgender_str = request.POST['gender']
     if postgender_str == '1':
