@@ -10,7 +10,7 @@ angular.module('tongji')
     
     $scope.login = function(){
         console.log($scope.user);
-        var url = '/post/users/';
+        var url = '/login';
         var postData = $scope.user;
         $http(url, postData).then(
             function(res){

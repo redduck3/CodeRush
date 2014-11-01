@@ -16,7 +16,7 @@ angular.module('tongji')
     
     $scope.register = function(){
         console.log($scope.user);
-        var url = '/login/';
+        var url = '/post/users';
         var postData = $scope.user;
         $http.post(url, postData).then(
             function(res){
