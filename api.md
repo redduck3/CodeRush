@@ -69,7 +69,58 @@ input:
 return:
 
 	200OK
+
+## get/joiners/byact/{aid}
+
+method: get
+
+return
+	200 OK
+	401 Did not Login
+	[{uid
+	  username
+	  gender
+	}]
+
+## get/joiners/byuser/{uid}
+
+method: get
+
+return
+	200 OK
+	401 Did not login
+	403 Fobidden
+	[{aid
+	  uid //ownerid
+	  starttime
+	  endtime
+	  description
+	}]
+
+## post/joiners
+
+method: post
+
+input:
+	uid
+	aid
 	
+return:
+	200 OK
+	400 Fail
+	401 Did not Login
+	403 Fobidden
+	
+	{jid:
+	}
+	
+## delete/joiners/aid
+
+method: post
+return:
+	200 OK
+	400 Fail
+	401 Did not Login
 	
 # User
 

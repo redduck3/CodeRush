@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name='logout'),
     
     url(r'^post/joiners/$', views.createJoiner, name='createJoiner'),
-    url(r'^get/joiners/(?P<uid>\d+)/$', views.getJoinersByUser, name='getJoinerByUser'),
-    url(r'^get/joiners/(?P<aid>\d+)/$', views.getJoinersByAct, name='getJoinerByAct'),
-    url(r'^delete/joins/$', views.deleteJoiner, name='deleteJoiner'),
+    url(r'^get/joiners/byuser/(?P<uid>\d+)/$', views.getJoinersByUser, name='getJoinerByUser'),
+    url(r'^get/joiners/byact/(?P<aid>\d+)/$', views.getJoinersByAct, name='getJoinerByAct'),
+    url(r'^delete/joins/(?P<aid>\d+)/$', views.deleteJoiner, name='deleteJoiner'),
 )

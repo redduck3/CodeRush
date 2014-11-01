@@ -220,21 +220,18 @@ def createJoiner(request):
         user = User.objects.get(id = postuid)
         joiner = Joiner(activity,user)
         joiner.save()
-        return HttpResponse()
+        response = {}
+        response['jid'] = joiner.id
+        return HttpResponse(json.dumps(response),content_type="application/json")
     except Exception:
-        return HttpResponseBadRequest
+        return HttpResponseBadRequest()
 
-def deleteJoiner(request):
+def deleteJoiner(request,aid):
     if 'user' not in request.session:
         return HttpResponse(status = 401)
     userid = request.session['user'].id
-    payload_json = request.POST['payload']
-    payload = json.load(payload_json)
-    postaid = payload['aid']
-    postuid = payload['uid']
-    if userid!=postuid:
-        return HttpResponseForbidden()
-    joiners = Joiner.objects.filter(aid = postaid, uid = postuid)
+
+    joiners = Joiner.objects.filter(aid = aid, uid = userid)
     if len(joiners) == 0:
         return HttpResponseBadRequest()
     joiner = joiners[0]
