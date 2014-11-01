@@ -21,13 +21,14 @@ from distutils.tests.test_archive_util import UID_GID_SUPPORT
 def createActivities(request):
     userid = request.POST['uid']
     buf = User.objects.get(id=userid)
-    newActivity = Activity(owner=buf, starttime=request.POST['starttime'], endtime=request.POST['endtime'], discription=request.POST['description'])
+    newActivity = Activity(owner=buf, starttime=request.POST['starttime'], endtime=request.POST['endtime'], discription=request.POST['description'],kind=request.POST['kind'])
     newActivity.save()
     returnData = {'aid': newActivity.id, 
                   'uid': newActivity.owner.id, 
                   'starttime': newActivity.starttime,
                   'endtime': newActivity.endtime,
-                  'description': newActivity.description}
+                  'description': newActivity.description,
+                  'kind':newActivity.kind}
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
 
 def getActivities(request):
@@ -38,11 +39,45 @@ def getActivities(request):
                'uid': i.owner.id,
                'starttime': i.starttime,
                'endtime': i.endtime,
-               'description': i.description
+               'description': i.description,
+               'kind': i.kind
                }
         returnData.append(buf)
     returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
+
+
+def getActivityByKindUndo(request,kid):
+    listOfActivities = Activity.objects.filter(kind = kid)
+    returnData = []
+    for i in listOfActivities:
+        if (i.endtime >= date.today()):
+            buf = {'aid': i.id,
+               'uid': i.owner.id,
+               'starttime': i.starttime,
+               'endtime': i.endtime,
+               'description': i.description,
+               'kind': i.kind
+               }
+            returnData.append(buf)
+    returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
+
+def getActivityByKind(request,kid):
+    listOfActivities = Activity.objects.filter(kind = kid)
+    returnData = []
+    for i in listOfActivities:
+        buf = {'aid': i.id,
+              'uid': i.owner.id,
+               'starttime': i.starttime,
+               'endtime': i.endtime,
+               'description': i.description,
+               'kind': i.kind
+        }
+        returnData.append(buf)
+    returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
+    
 
 def getActivityById(request, id):
     aid = id
@@ -52,7 +87,8 @@ def getActivityById(request, id):
                   'uid': acbuf.owner.id,
                   'starttime': acbuf.starttime,
                   'endtime': acbuf.endtime,
-                  'description': acbuf.description}
+                  'description': acbuf.description,
+                  'kind': acbuf.kind}
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
 
 def getActivitiesUndo(request):
@@ -64,19 +100,24 @@ def getActivitiesUndo(request):
                'uid': i.owner.id,
                'starttime': i.starttime,
                'endtime': i.endtime,
-               'description': i.description
+               'description': i.description,
+               'kind': i.kind
                }
             returnData.append(buf)
     returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
     
 def updateActivity(request, aid):
-    userBuf = User.objects.filter(id=request.PUT['uid'])[0]
-    myactivity = Activity.objects.get(id=aid)
+    try:
+        userBuf = User.objects.get(id=request.POST['uid'])
+        myactivity = Activity.objects.get(id=aid)
+    except Exception:
+        return HttpResponseBadRequest()
     myactivity.owner = userBuf
     myactivity.starttime = request.POST['starttime']
     myactivity.endtime = request.POST['endtime']
     myactivity.description = request.POST['description']
+    myactivity.kind = request.POST['kind']
     myactivity.save()
     return HttpResponse('ok')
     
@@ -243,9 +284,11 @@ def deleteJoiner(request,aid):
 def getJoinersByUser(request,uid):
     if 'user' not in request.session:
         return HttpResponse(status = 401)
+    '''
     userid = request.session['user'].id
     if userid != uid:
         return HttpResponseForbidden()
+    '''
     joiners = Joiner.objects.filter(user_id = uid)
     returnData = []
     for joiner in joiners:
