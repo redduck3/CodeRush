@@ -41,6 +41,7 @@ def getActivities(request):
                'description': i.description
                }
         returnData.append(buf)
+    returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
 
 def getActivityById(request, id):
@@ -66,6 +67,7 @@ def getActivitiesUndo(request):
                'description': i.description
                }
             returnData.append(buf)
+    returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
     
 def updateActivity(request, aid):
@@ -244,7 +246,7 @@ def getJoinersByUser(request,uid):
     userid = request.session['user'].id
     if userid != uid:
         return HttpResponseForbidden()
-    joiners = Joiner.objects.filter(uid = uid)
+    joiners = Joiner.objects.filter(user_id = uid)
     returnData = []
     for joiner in joiners:
         activity = joiner.activity
@@ -255,12 +257,13 @@ def getJoinersByUser(request,uid):
                'description': activity.description
                }
         returnData.append(buf)
+    returnData.sort(lambda x,y: -cmp(x['starttime'], y['starttime']))
     return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
         
 def getJoinersByAct(request,aid):
     if 'user' not in request.session:
         return HttpResponse(status = 401)
-    joiners = Joiner.objects.filter(aid = aid)
+    joiners = Joiner.objects.filter(activity_id = aid)
     returnData = []
     for joiner in joiners:
         user = joiner.user
