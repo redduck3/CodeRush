@@ -15,4 +15,9 @@ urlpatterns = patterns('',
     url(r'^delete/users/(?P<id>\d+)/$', views.deleteUser, name='deleteUser'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
+    
+    url(r'^post/joiners/$', views.createJoiner, name='createJoiner'),
+    url(r'^get/joiners/byuser/(?P<uid>\d+)/$', views.getJoinersByUser, name='getJoinerByUser'),
+    url(r'^get/joiners/byact/(?P<aid>\d+)/$', views.getJoinersByAct, name='getJoinerByAct'),
+    url(r'^delete/joins/(?P<aid>\d+)/$', views.deleteJoiner, name='deleteJoiner'),
 )

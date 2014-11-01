@@ -70,22 +70,29 @@ return:
 
 	200OK
 
-## get/joiners/{aid}
 
 method: get
 
 return
-
+	200 OK
+	401 Did not Login
 	[{uid
+	  username
+	  gender
 	}]
 
-## get/joiners/{uid}
 
 method: get
 
 return
-
+	200 OK
+	401 Did not login
+	403 Fobidden
 	[{aid
+	  uid //ownerid
+	  starttime
+	  endtime
+	  description
 	}]
 
 ## post/joiners
@@ -93,18 +100,63 @@ return
 method: post
 
 input:
-
-	{'aid',
+	uid
 	 'uid'}
+	200 OK
+	400 Fail
+	401 Did not Login
+	403 Fobidden
+	}
+	
 
-return 
+return:
+	200 OK
+	400 Fail
+	401 Did not Login
+	
+# User
 
-	{'jid'}
+## login/
 
-##delete/joiners/{jid}
+		200 OK
+		
+		
+## logout/	
+		
+	return:
+		200 OK
+		
+		
+## post/users/
+	
+return:
+	200 OK
+	400 Fail
+	{'uid':userid
+	 'username':username
+	}
+	
+## get/users/{id}
+	
+return:
+	200 OK
+	400 Fail
+	{'uid'
+	 'username'
+	 'password'
+	 'gender'
+	
+	}
+	
+## delete/users/{id}
+	
+	return:
+		200 OK
+		400 Fail(did not login)
+		403 Fobidden
+## put/users/
 
-method: get
-
-return
-
+	return:
 	200OK
+		400 Fail(did not login)
+		403 Fobidden
