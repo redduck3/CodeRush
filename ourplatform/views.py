@@ -169,8 +169,11 @@ def createUser(request):
     payload = json.load(payload_json)
     postname = payload['username']
     postpasswd = payload['password']
-    postgender = payload['gender']
-
+    postgender_str = payload['gender']
+    if postgender_str == '1':
+        postgender = True
+    else:
+        postgender = False
     result = User.objects.filter(username = postname)
     if len(result)!= 0:
         return HttpResponseBadRequest('%s has already been registered!' % postname)
@@ -220,7 +223,11 @@ def updateUser(request,id):
     payload = json.load(payload_json)
     user.username = payload['username']
     user.password = payload['password']
-    user.gender = payload['gender']
+    gender_str = payload['gender']
+    if gender_str == '1':
+        user.gender = True
+    else:
+        user.gender = False
     user.save()
     
     request.session['user'] = user
