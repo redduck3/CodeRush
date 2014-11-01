@@ -93,4 +93,18 @@ return
 method: post
 
 input:
-	
+
+	{'aid',
+	 'uid'}
+
+return 
+
+	{'jid'}
+
+##delete/joiners/{jid}
+
+method: get
+
+return
+
+	200OK
