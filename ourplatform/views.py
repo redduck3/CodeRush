@@ -7,6 +7,7 @@ import json
 from datetime import datetime, date
 from ourplatform import CJsonEncoder
 from django.core.serializers.json import DjangoJSONEncoder
+from distutils.tests.test_archive_util import UID_GID_SUPPORT
 
 # Create your views here.
 # def test(request):
@@ -85,9 +86,7 @@ def login(request):
     
     result = User.objects.filter(username = postname,password = postpasswd)
     if len(result) == 0:
-        response = HttpResponse()
-        '''modify status'''
-        return response
+        return HttpResponse(status = 401)
     user = result[0]
     '''
     request.session["uid"] = user.id
@@ -159,9 +158,7 @@ def getUser(request,id):
 
 def updateUser(request,id):
     if 'user' not in request.session:
-        response = HttpResponse()
-        '''modify status'''
-        return response
+        return HttpResponse(status = 401)
     uid = request.session['user'].id
     putid = id
     if uid != putid:
@@ -183,9 +180,7 @@ def updateUser(request,id):
 
 def deleteUser(request,id):
     if 'user' not in request.session:
-        response = HttpResponse()
-        '''modify status'''
-        return response
+        return HttpResponse(status = 401)
     uid = request.session['user'].id
     getid = id
     if uid !=getid:
@@ -206,3 +201,63 @@ def deleteUser(request,id):
     except KeyError:
         pass
     return HttpResponse('OK')
+
+def createJoiner(request):
+    if 'user' not in request.session:
+        return HttpResponse(status = 401)
+    userid = request.session['user'].id
+    payload_json = request.POST['payload']
+    payload = json.load(payload_json)
+    postaid = payload['aid']
+    postuid = payload['uid']
+    if userid!=postuid:
+        return HttpResponseForbidden()
+    joiners = Joiner.objects.filter(aid = postaid, uid = postuid)
+    if len(joiners) != 0:
+        return HttpResponseBadRequest()
+    try:
+        activity = Activity.objects.get(id = postaid)
+        user = User.objects.get(id = postuid)
+        joiner = Joiner(activity,user)
+        joiner.save()
+        return HttpResponse()
+    except Exception:
+        return HttpResponseBadRequest
+
+def deleteJoiner(request):
+    if 'user' not in request.session:
+        return HttpResponse(status = 401)
+    userid = request.session['user'].id
+    payload_json = request.POST['payload']
+    payload = json.load(payload_json)
+    postaid = payload['aid']
+    postuid = payload['uid']
+    if userid!=postuid:
+        return HttpResponseForbidden()
+    joiners = Joiner.objects.filter(aid = postaid, uid = postuid)
+    if len(joiners) == 0:
+        return HttpResponseBadRequest()
+    joiner = joiners[0]
+    joiner.delete()
+    return HttpResponse()
+
+def getJoinersByUser(request,uid):
+    if 'user' not in request.session:
+        return HttpResponse(status = 401)
+    userid = request.session['user'].id
+    if userid != uid:
+        return HttpResponseForbidden()
+    joiners = Joiner.objects.filter(uid = uid)
+    returnData = []
+    for joiner in joiners:
+        activity = joiner.activity
+        buf = {'aid': activity.id,
+               'uid': activity.owner.id,
+               'starttime': activity.starttime,
+               'endtime': activity.endtime,
+               'description': activity.description
+               }
+        returnData.append(buf)
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
+        
+    
