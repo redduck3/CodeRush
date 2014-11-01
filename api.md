@@ -70,10 +70,12 @@ return:
 
 	200OK
 
+## get/joiners/byact/{aid}
 
 method: get
 
 return
+
 	200 OK
 	401 Did not Login
 	[{uid
@@ -81,13 +83,14 @@ return
 	  gender
 	}]
 
+## get/joiners/byuser/{uid}
 
 method: get
 
 return
+
 	200 OK
 	401 Did not login
-	403 Fobidden
 	[{aid
 	  uid //ownerid
 	  starttime
@@ -100,6 +103,7 @@ return
 method: post
 
 input:
+
 	uid
 	 'uid'}
 	200 OK
@@ -110,6 +114,7 @@ input:
 	
 
 return:
+
 	200 OK
 	400 Fail
 	401 Did not Login
@@ -118,13 +123,14 @@ return:
 
 ## login/
 
-		200 OK
+	200 OK
 		
 		
 ## logout/	
 		
-	return:
-		200 OK
+return:
+
+	200 OK
 		
 		
 ## post/users/
@@ -139,24 +145,26 @@ return:
 ## get/users/{id}
 	
 return:
+
 	200 OK
 	400 Fail
 	{'uid'
 	 'username'
 	 'password'
-	 'gender'
-	
-	}
+	 'gender'}
 	
 ## delete/users/{id}
 	
-	return:
-		200 OK
-		400 Fail(did not login)
-		403 Fobidden
+return:
+
+	200 OK
+	400 Fail(did not login)
+	403 Fobidden
+
 ## put/users/
 
 	return:
+
 	200OK
-		400 Fail(did not login)
-		403 Fobidden
+	400 Fail(did not login)
+	403 Fobidden

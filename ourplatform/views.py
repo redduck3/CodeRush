@@ -30,7 +30,7 @@ def createActivities(request):
     newActivity = Activity(owner=buf, starttime=request.POST['starttime'], endtime=request.POST['endtime'], discription=request.POST['description'])
     newActivity.save()
     returnData = {'aid': newActivity.id, 
-                  'uid': newActivity.owner.id, 
+                  'uid': newActivity.owner.id,
                   'starttime': newActivity.starttime,
                   'endtime': newActivity.endtime,
                   'description': newActivity.description}
