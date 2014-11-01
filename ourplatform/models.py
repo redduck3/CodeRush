@@ -11,6 +11,7 @@ class Activity(models.Model):
     owner = models.ForeignKey(User)
     starttime = models.DateField()
     endtime = models.DateField()
+    kind = models.IntegerField()
     description = models.CharField(max_length=140)
     
 class Joiner(models.Model):

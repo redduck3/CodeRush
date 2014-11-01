@@ -26,6 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+# 
+# APPEND_SLASH = False
 
 # Application definition
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+#     'ourplatform.buf.AngularCSRFRename',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -47,12 +51,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'django.middleware.csrf.CsrfResponseMiddleware'
 )
 
 ROOT_URLCONF = 'hackathon.urls'
-
 WSGI_APPLICATION = 'hackathon.wsgi.application'
-
+# APPEND_SLASH = False
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
