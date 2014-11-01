@@ -1,0 +1,69 @@
+<form class="form-horizontal" role="form" name="form" ng-show="model" ng-submit="onFormSubmit()">
+    <div class="form-custom-alerts">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    </div>
+    <div ng-form ng-repeat="field in fields" name="innerForm" ng-if="!field.hidden">
+        <div class="form-group" ng-class="{'has-feedback has-success': isSuccess(innerForm), 'has-feedback has-error': isError(innerForm)}">
+            <label class="col-sm-2 control-label">{{field.describe}}</label>
+            <div class="col-sm-4" ng-switch="field.type">
+                <div class="checkbox" ng-switch-when='checkbox'>
+                    <label>
+                        <input type="checkbox" name="input" ng-model="model[field.name]">
+                        {{field.checkBoxMessage != null ? field.checkBoxMessage : field.describe}}
+                    </label>
+                </div>
+                <div class="radio" ng-switch-when='radio'>
+                    <div class="radio" ng-repeat='option in field.options'>
+                        <label>
+                            <input type="radio" name="input" value="{{option.value}}" ng-model="model[field.name]" ng-required="true"> {{option.text}}
+                        </label>
+                    </div>
+                </div>
+                <div ng-switch-when='select'>
+                    <select class="form-control" name="input" ng-model="model[field.name]"
+                        ng-options="option.value as option.name for option in field.options"
+                        ng-required="field.required == null ? true : field.required"></select>
+                </div>
+                <div ng-switch-default>
+                    <input type="{{field.type || 'text'}}" class="form-control" placeholder="{{field.placeholder || ''}}"
+                        ng-disabled="!!field.disabled" ng-model="model[field.name]" name="input"
+                        ui-validate="validators"
+                        ng-required="field.required == null ? true : field.required"
+                        ng-pattern="patternForField(field)">
+                    <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="isSuccess(innerForm)"></span>
+                    <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="isError(innerForm)"></span>
+                </div>
+            </div>
+            <div class="help-block col-sm-6" ng-show='!hideError || attempted || innerForm.input.$dirty'>
+                <p ng-show="innerForm.input.$error.required">{{field.describe}}不能为空！</p>
+                <p ng-show="innerForm.input.$error.pattern">{{field.describe}}格式错误！</p>
+                <p ng-show="innerForm.input.$error.minLength">{{field.describe}}最少需要{{field.minLength}}个字符！</p>
+                <p ng-show="innerForm.input.$error.maxLength">{{field.describe}}的长度不能少于{{field.maxLength}}个字符！</p>
+                <p ng-show="innerForm.input.$error.custom">
+                    <span ng-show="!!field.validateMessage">{{field.validateMessage}}</span>
+                    <span ng-show="!field.validateMessage">{{field.describe}}填写有误！</span>
+                </p>
+            </div>
+        </div>
+        <div ng-if="field.type == 'password' && field.needConfirm == true" class="form-group" ng-class="{'has-feedback has-success': isSuccess(innerForm, 'confirm'), 'has-feedback has-error': isError(innerForm, 'confirm')}">
+            <label class="col-sm-2 control-label">确认密码</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" ng-model="extraModel[field.name]" name="confirm"
+                    ng-required="field.required == null || field.required || !!model[fieldname]"
+                ui-validate="{passwordMatch: '$value==model[field.name]'}" ui-validate-watch=" 'model[field.name]' ">
+                <span class="glyphicon glyphicon-ok form-control-feedback" ng-show="isSuccess(innerForm, 'confirm')"></span>
+                <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="isError(innerForm, 'confirm')"></span>
+            </div>
+            <div class="help-block col-sm-6" ng-show='!hideError || attempted || innerForm.confirm.$dirty'>
+                <span ng-show="innerForm.confirm.$error.required">确认密码不能为空！</span>
+                <span ng-show="!innerForm.confirm.$error.required && innerForm.confirm.$error.passwordMatch">两次密码输入不一致！</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-if="submitButton != 'none'">
+        <div class="col-sm-offset-2 col-sm-8">
+            <button type="submit" class="btn btn-primary">{{submitButton || '保存修改'}}</button>
+        </div>
+    </div>
+    <div ng-transclude></div>
+</form>

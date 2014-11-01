@@ -128,10 +128,9 @@ def updateActivity(request, aid):
     return HttpResponse('ok')
     
 def login(request):
-    payload_json = request.POST['payload']
-    payload = json.load(payload_json)
-    postname = payload['username']
-    postpasswd = payload['password']
+    
+    postname = request.POST['username']
+    postpasswd = request.POST['password']
     
     result = User.objects.filter(username = postname,password = postpasswd)
     if len(result) == 0:
@@ -165,11 +164,14 @@ def logout(request):
         
     
 def createUser(request):
-    payload_json = request.POST['payload']
-    payload = json.load(payload_json)
-    postname = payload['username']
-    postpasswd = payload['password']
-    postgender = payload['gender']
+   
+    postname = request.POST['username']
+    postpasswd = request.POST['password']
+    postgender_str = request.POST['gender']
+    if postgender_str == '1':
+        postgender = True
+    else:
+        postgender = False
 
     result = User.objects.filter(username = postname)
     if len(result)!= 0:
@@ -216,11 +218,14 @@ def updateUser(request,id):
     if len(result) == 0:
         return HttpResponseBadRequest('does not exist')
     user = result[0]
-    payload_json = request.PUT['payload']
-    payload = json.load(payload_json)
-    user.username = payload['username']
-    user.password = payload['password']
-    user.gender = payload['gender']
+    
+    user.username = request.POST['username']
+    user.password = request.POST['password']
+    gender_str = request.POST['gender']
+    if gender_str == '1':
+        user.gender = True
+    else:
+        user.gender = False
     user.save()
     
     request.session['user'] = user
@@ -255,10 +260,9 @@ def createJoiner(request):
     if 'user' not in request.session:
         return HttpResponse(status = 401)
     userid = request.session['user'].id
-    payload_json = request.POST['payload']
-    payload = json.load(payload_json)
-    postaid = payload['aid']
-    postuid = payload['uid']
+    
+    postaid = request.POST['aid']
+    postuid = request.POST['uid']
     if userid!=postuid:
         return HttpResponseForbidden()
     joiners = Joiner.objects.filter(aid = postaid, uid = postuid)

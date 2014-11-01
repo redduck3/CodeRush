@@ -1,6 +1,16 @@
 hackathon/*.pyc
 ourplatform/*.pyc
 ourplatform/migrations/*.pyc
+
 *.orig
 ourplatform/*.orig
-ourplatform/templates/ourplatform/*.orig
+
+*.swp
+ourplatform/*.swp
+ourplatform/templates/*.swp
+ourplatform/static/*.swp
+
+*.~
+ourplatform/*.~
+ourplatform/templates/*.~
+ourplatform/static/*.~
