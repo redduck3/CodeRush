@@ -4,10 +4,10 @@ angular.module('tongji', [
 ])
 .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
-        templateUrl: 'views/dashbroad.html'
+        templateUrl: '/static/views/dashboard.html'
     });
     
     $routeProvider.when('/login', {
-        templateUrl: 'views/login.html'
+        templateUrl: '/static/views/login.html'
     });
 }])

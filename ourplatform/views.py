@@ -8,7 +8,7 @@ from datetime import datetime, date
 from ourplatform import CJsonEncoder
 from django.core.serializers.json import DjangoJSONEncoder
 from django.template import RequestContext, loader
-from distutils.tests.test_archive_util import UID_GID_SUPPORT
+# from distutils.tests.test_archive_util import UID_GID_SUPPORT
 
 # Create your views here.
 # def test(request):
