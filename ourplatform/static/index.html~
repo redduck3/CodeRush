@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh" ng-app="tongji" ng-controller="masterController">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="大家一起去搞基">
+    <meta name="author" content="Gaocegege JerryLX redduck3">
+    
+    <title>同基网</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+    
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular/angular.js"></script>    
+    <script src="bower_components/angular-router/angular-route.js"></script>
+    <script src="bower_components/ui-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    
+    <script src="js/controllers/masterController.js"></script>
+</head>
+    <h1>国家级标题</h1>
+    <h2>省部级标题</h2>
+    <h3>{{hello}}<h3>
+<body>
+</body>
+
+</html>

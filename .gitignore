@@ -1,6 +1,6 @@
 hackathon/*.pyc
 ourplatform/*.pyc
 ourplatform/migrations/*.pyc
-api.md.orig
-ourplatform/views.py.orig
-ourplatform/templates/ourplatform/index.html.orig
+*.orig
+ourplatform/*.orig
+ourplatform/templates/ourplatform/*.orig
