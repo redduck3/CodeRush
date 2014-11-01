@@ -27,7 +27,7 @@ def createActivities(request):
                   'starttime': newActivity.starttime,
                   'endtime': newActivity.endtime,
                   'description': newActivity.description}
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
 
 def getActivities(request):
     listOfActivities = Activity.objects.all()
@@ -40,7 +40,7 @@ def getActivities(request):
                'description': i.description
                }
         returnData.append(buf)
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
 
 def getActivityById(request, id):
     aid = id
@@ -51,7 +51,7 @@ def getActivityById(request, id):
                   'starttime': acbuf.starttime,
                   'endtime': acbuf.endtime,
                   'description': acbuf.description}
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
 
 def getActivitiesUndo(request):
     listOfActivities = Activity.objects.all()
@@ -65,7 +65,7 @@ def getActivitiesUndo(request):
                'description': i.description
                }
             returnData.append(buf)
-    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder))
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False, cls=DjangoJSONEncoder), content_type="application/json")
     
 def updateActivity(request, aid):
     userBuf = User.objects.filter(id=request.PUT['uid'])[0]
