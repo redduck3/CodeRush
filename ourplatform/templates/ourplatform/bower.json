@@ -1,0 +1,19 @@
+{
+  "name": "coderush",
+  "version": "1.0",
+  "homepage": "https://github.com/redduck3/CodeRush",
+  "authors": [
+    "redduck3 <zhouxc3@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "angular": "~1.3.1",
+    "bootstrap": "~3.3.0",
+    "bootstrap-ui": "~0.11.2",
+    "angular-i18n": "~1.3.1",
+    "moment": "~2.8.3",
+    "html5shiv": "~3.7.2",
+    "json3": "~3.3.2"
+  }
+}
