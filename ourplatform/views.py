@@ -7,6 +7,7 @@ import json
 from datetime import datetime, date
 from ourplatform import CJsonEncoder
 from django.core.serializers.json import DjangoJSONEncoder
+from django.template import RequestContext, loader
 from distutils.tests.test_archive_util import UID_GID_SUPPORT
 
 # Create your views here.
@@ -244,12 +245,12 @@ def deleteJoiner(request,aid):
     return HttpResponse()
 
 def getJoinersByUser(request,uid):
-    if 'user' not in request.session:
-        return HttpResponse(status = 401)
-    userid = request.session['user'].id
-    if userid != uid:
-        return HttpResponseForbidden()
-    joiners = Joiner.objects.filter(uid = uid)
+#     if 'user' not in request.session:
+#         return HttpResponse(status = 401)
+#     userid = request.session['user'].id
+#     if userid != uid:
+#         return HttpResponseForbidden()
+    joiners = Joiner.objects.filter(user_id = uid)
     returnData = []
     for joiner in joiners:
         activity = joiner.activity

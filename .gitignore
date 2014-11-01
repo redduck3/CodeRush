@@ -1,3 +1,5 @@
 hackathon/*.pyc
 ourplatform/*.pyc
 ourplatform/migrations/*.pyc
+api.md.orig
+ourplatform/views.py.orig
