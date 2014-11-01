@@ -4,6 +4,7 @@ from ourplatform.models import *
 from django.http import *
 from urllib2 import Request
 import json
+from datetime import datetime
 
 # Create your views here.
 # def test(request):
@@ -39,8 +40,8 @@ def getActivities(request):
         returnData.append(buf)
     return HttpResponse(json.dumps(returnData, ensure_ascii=False))
 
-def getActivityById(request):
-    aid = request.GET['id']
+def getActivityById(request, id):
+    aid = id
     arr = Activity.objects.filter(id=aid)
     acbuf = arr[0]
     returnData = {'aid': acbuf.id,
@@ -49,6 +50,30 @@ def getActivityById(request):
                   'endtime': acbuf.endtime,
                   'description': acbuf.description}
     return HttpResponse(json.dumps(returnData, ensure_ascii=False))
+
+def getActivitiesUndo(request):
+    listOfActivities = Activity.objects.all()
+    returnData = []
+    for i in listOfActivities:
+        if (i.endtime <= datetime.now()):
+            buf = {'aid': i.id,
+               'uid': i.owner.id,
+               'starttime': i.starttime,
+               'endtime': i.endtime,
+               'description': i.description
+               }
+            returnData.append(buf)
+    return HttpResponse(json.dumps(returnData, ensure_ascii=False))
+    
+def updateActivity(request, aid):
+    userBuf = User.objects.filter(id=request.PUT['uid'])[0]
+    myactivity = Activity.objects.get(id=aid)
+    myactivity.owner = userBuf
+    myactivity.starttime = request.POST['starttime']
+    myactivity.endtime = request.POST['endtime']
+    myactivity.description = request.POST['description']
+    myactivity.save()
+    return HttpResponse()
     
 def login(request):
     payload_json = request.POST['payload']
@@ -59,7 +84,7 @@ def login(request):
     result = User.objects.filter(username = postname,password = postpasswd)
     if len(result) == 0:
         response = HttpResponse()
-        '''ÐÞ¸Ä×´Ì¬Âë'''
+        '''modify status'''
         return response
     user = result[0]
     '''
