@@ -14,3 +14,4 @@ ourplatform/static/*.swp
 ourplatform/*.~
 ourplatform/templates/*.~
 ourplatform/static/*.~
+db.sqlite3
