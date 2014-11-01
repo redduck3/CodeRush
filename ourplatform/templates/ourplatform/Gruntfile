@@ -1,0 +1,22 @@
+grunt.initConfig({
+  concat: {
+    css: {
+      files: {
+        'css/coderush.css': [
+          'src/aa.js',
+          'src/aaa.js'
+         ],
+      },
+    },
+  },
+  uglify:{
+    js: {
+      files: {
+        'js/script.min.js': [
+          'src/bb.js', 
+          'src/bbb.js'
+        ],
+      },
+    },
+  },
+});
