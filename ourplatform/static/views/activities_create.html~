@@ -1,0 +1,8 @@
+<div ng-controller="activitiesCreateController">
+    <div form-custom="fields" model="activity" state="userState" form-submit="createActivities()" submit-button="none" hide-error="true">
+        <div class="col-sm-offset-2 col-sm-8">
+            <button type="submit" class="btn btn-primary" ng-click="onFormSubmit()">注册</button>
+            <button type="button" class="btn btn-default" ng-click="back()">返回</button>
+        </div>
+    </div>
+</div>

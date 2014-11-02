@@ -4,6 +4,5 @@
 {"aid": 3, "uid": 2, "title":"组队游泳", "starttime": "2014-11-4 12:00:00", "endtime": "2014-11-1 17:00:00", "description": "深水区求带"}, 
 {"aid": 4, "uid": 3, "title":"组队足球", "starttime": "2014-11-7 16:00:00", "endtime": "2014-11-1 18:00:00", "description": "租场地 价格均分"}, 
 {"aid": 5, "uid": 4, "title":"组队学霸", "starttime": "2014-11-4 17:00:00", "endtime": "2014-11-1 19:00:00", "description": "图书馆"}, 
-{"aid": 6, "uid": 5, "title":"组队吃自助餐", "starttime": "2014-11-5 16:00:00", "endtime": "2014-11-1 20:00:00", "description": "团购有优惠"}
-] 
+{"aid": 6, "uid": 5, "title":"组队吃自助餐", "starttime": "2014-11-5 16:00:00", "endtime": "2014-11-1 20:00:00", "description": "团购有优惠"}] 
 

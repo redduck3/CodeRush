@@ -1,0 +1,12 @@
+<div ng-controller="activitiesController">
+  <div ng-repeat="act in data" class="panel panel-default col-sm-3">
+    <div class="panel-heading">
+      <h3 class="panel-title" >{{act.title}}<button class="btn btn-primary" id="{{act.aid}}" onclick="alert('报名成功');">参加</button></h3>      
+    </div>
+    <div class="panel-body">
+        <p>报名结束时间:{{act.endtime}}</p>
+        <p>活动开始时间:{{act.starttime}}</p>
+        <p>详情：{{act.description}}</p>
+    </div>
+  </div>
+</div>
