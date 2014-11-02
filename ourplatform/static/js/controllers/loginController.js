@@ -1,5 +1,5 @@
 angular.module('tongji')
-.controller('loginController', ['$scope', '$http', function($scope, $http){
+.controller('loginController', function($scope, $http){
     $scope.success = false;
     $scope.user = {};
    
@@ -21,4 +21,4 @@ angular.module('tongji')
             }
         );
     }
-}])
+})

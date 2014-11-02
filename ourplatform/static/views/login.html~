@@ -1,7 +1,8 @@
-<div ng-controller="loginController">
-    <div form-custom="fields" model="user" state="userState" form-submit="createUser()" submit-button="none" hide-error="true">
-                <button type="submit" class="btn btn-primary" ng-click="onFormSubmit()">添加用户</button>
-                <button type="button" class="btn btn-default" ng-click="back()">返回</button>
-
+<div class="modal-body" ng-controller="loginController">
+    <div form-custom="fields" model="user" state="userState" form-submit="login()" submit-button="none" hide-error="true">
+        <div class="col-sm-offset-2 col-sm-8 modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="onFormSubmit()">登录</button>
+            <button type="button" class="btn btn-default" ng-click="back()">返回</button>
+        </div>
     </div>
 </div>

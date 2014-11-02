@@ -1,19 +1,23 @@
 angular.module('tongji', [
     'ngRoute',
-    'ui.bootstrap',
+    'ui.bootstrap'
 ])
 .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: '/static/views/dashboard.html'
     });
     
-    $routeProvider.when('/login', {
-        templateUrl: '/static/views/login.html'
-    });
-
     $routeProvider.when('/register', {
         templateUrl: '/static/views/register.html'
     });
+    
+    $routeProvider.when('/activities_create', {
+        templateUrl: '/static/views/activities_create.html'
+    })
+    
+    $routeProvider.when('/activities', {
+        templateUrl: '/static/views/activities.html'
+    })
 }])
 
 .factory('pregMatchService', function() {
@@ -43,3 +47,14 @@ angular.module('tongji', [
     return service;
 })
 
+.factory('dataService', function($http){
+    var service = {
+        getData: function(url_p){
+            return $http({
+                method: 'GET',
+                url: url_p
+            });
+        }
+    }
+    return service;
+})

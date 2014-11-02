@@ -1,9 +1,26 @@
 angular.module('tongji')
-.controller('masterController', ['$scope','$http', function($scope, $http) {
-    $scope.hello = "市级标题";
-
-
-}]);
+.controller('masterController', ['$scope','$http','$modal', function($scope, $http, $modal) {
+     $scope.online = false;
+     $scope.login = function () {
+        var modalInstance = $modal.open({
+            templateUrl: 'static/views/login.html',
+            controller: 'loginController',
+            size: 'lg',
+            resolve:{
+            }
+        });
+         
+        modalInstance.result.then(
+            function (result) {
+               $scope.online = true;
+               
+            },
+            function () {
+               $scope.online = true;
+            }
+        );
+    }
+}])
 
 angular.module('tongji')
 .controller('imageViewerController', ['$scope', function($scope) {
@@ -20,4 +37,4 @@ angular.module('tongji')
   for (var i=0; i<2; i++) {
     $scope.addSlide(i);
   }
-}]);
+}])
